@@ -7,7 +7,7 @@ import (
 )
 
 type techTime struct {
-	date  	   string     // The current date formated as YY-MM-DD -> 2024-02-19
+	date  	   string     // The current date formated as YYYY-MM-DD -> 2024-02-19
 	startH     string     // The start time for the office -> 8:00 am
 	endH       string     // The end time for the office -> 2:30 pm
 	breakTimeH string     // The time when going on break  -> 11:15 am
@@ -23,30 +23,54 @@ func FormatTime(t time.Time) string {
 	return f
 }
 
-// Returns the a string formatted as 3:04:05 pm (HH:MM:SS) as a time.Time -> 00:03:27 0000-01-01 11:15:00 +0000 UTC
-func ConvertTime(s string) (time.Time,error) {
+func FormatDate(t time.Time) string {
+	format := "2006-01-02"
+	f := t.Format(format)
+	return f
+}
+
+// Returns a string formatted as 3:04:05 pm (HH:MM:SS) and a string formatted as YYYY-MM-DD as a time.Time -> 00:03:27 0000-01-01 11:15:00 +0000 UTC
+func ConvertTime(s string,d string) (time.Time,error) {
 	var format string
 	if strings.Contains(strings.ToLower(s),"pm") || strings.Contains(strings.ToLower(s),"am"){
-		format = "3:04 pm"
+		format =  "2006-01-02 3:04 pm"
+		s = d +" "+ s 
 	} else {
 		format = "03:04"
+		
 	}
-	t,e := time.Parse(format,s)
+	
+	
+	loc, e := time.LoadLocation("America/New_York")
+	t,e := time.ParseInLocation(format,s,loc)
 	return t,e
 }
 
 // Returns true or false depending if the current time is within the Tech Office hours and if it is before or after break
 func (t techTime) IsOpen() (bool,error) {
-	start,err := ConvertTime(t.startH)
-	end, err := ConvertTime(t.endH)
-	brk, err := ConvertTime(t.breakTimeH)
-	brkLen,err := ConvertTime(t.breakLen)
+	start,err := ConvertTime(t.startH,t.date)
+	if err != nil {
+		log.Println(err)
+	}
+	end, err := ConvertTime(t.endH,t.date)
+	if err != nil {
+		log.Println(err)
+	}
+	brk, err := ConvertTime(t.breakTimeH,t.date)
+	if err != nil {
+		log.Println(err)
+	}
+	brkLen,err := ConvertTime(t.breakLen,t.date)
+	if err != nil {
+		log.Println(err)
+	}
+
 	ct := time.Now()
-	log.Println(brk)
 	open := false
-	
+
 	if ct.After(start) && ct.Before(end){
 		distance := brk.Add(time.Minute * time.Duration(brkLen.Minute())) // Gets the break time + the break length in minutes
+		
 		if ct.Before(brk) || ct.After(distance){
 			open = true
 		}
