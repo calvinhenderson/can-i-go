@@ -1,7 +1,7 @@
 ---
 name: "Bug report"
 about: Something isn't working right
-title: "[:beetle:]: "
+title: "🪲 "
 labels: bug
 ---
 
