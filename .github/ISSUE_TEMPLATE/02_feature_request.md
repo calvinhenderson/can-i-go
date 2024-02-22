@@ -1,7 +1,7 @@
 ---
 name: "Feature Request"
 about: Ideas to improve the project
-title: "[:bulb:]: "
+title: "💡 "
 labels: enhancement
 ---
 
