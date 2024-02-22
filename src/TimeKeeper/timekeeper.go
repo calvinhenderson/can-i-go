@@ -16,6 +16,8 @@ type techTime struct {
 }
 
 
+
+
 // Returns the time.Time passed to it as a string formatted in 12h -> 3:04:05 pm (HH:MM:SS)
 func FormatTime(t time.Time) string {
 	format := "3:04 pm"
@@ -23,6 +25,7 @@ func FormatTime(t time.Time) string {
 	return f
 }
 
+// Returns the time.Time passed to it as a string formatted in YYYY-MM-DD -> 2023-01-01
 func FormatDate(t time.Time) string {
 	format := "2006-01-02"
 	f := t.Format(format)
@@ -79,7 +82,7 @@ func (t techTime) IsOpen() (bool,error) {
 }
 
 // Creates a new techTime Struct
-func NewTetechTime(d string, st string, et string, bkt string, bkl string) techTime {
+func NewTechTime(d string, st string, et string, bkt string, bkl string) techTime {
 	tt := techTime{
 		date:d,
 		startH: st,
@@ -89,6 +92,8 @@ func NewTetechTime(d string, st string, et string, bkt string, bkl string) techT
 	}
 	return tt
 }
+
+
 	
 
 
