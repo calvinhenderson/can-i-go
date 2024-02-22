@@ -4,6 +4,8 @@ import (
 	"log"
 	"strings"
 	"time"
+	"os"
+	"encoding/csv"
 )
 
 type techTime struct {
@@ -95,6 +97,47 @@ func NewTechTime(d string, st string, et string, bkt string, bkl string) techTim
 
 
 	
+// Creats a slice of techTimes from a csv file at a filepath given as a string
+func NewTechTimesFromCSV(f string) ([]techTime,error) {
+	file, err := os.Open(f) 
+      
+    
+    if err != nil { 
+        log.Println(err) 
+    } 
+  
+    
+    defer file.Close() 
+  
+    reader := csv.NewReader(file) 
+      
+    records, err := reader.ReadAll() 
+
+    if err != nil { 
+		log.Println(err)
+    } 
+    var tts []techTime
+
+    for _, eachrecord := range records[1:]  { 
+		var tt techTime
+        for x,r := range eachrecord{
+			switch x {
+			case 0:
+				tt.date = r
+			case 1:
+				tt.startH = r
+			case 2:
+				tt.endH = r
+			case 3:
+				tt.breakTimeH = r
+			case 4:
+				tt.breakLen = r
+			}
+		}
+		tts = append(tts, tt)
+    } 
+	return tts,err
+}
 
 
 	
