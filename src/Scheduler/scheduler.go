@@ -8,9 +8,14 @@ import (
 
 
 const (
-	OPEN uint8 = 0 << iota
+	OPEN uint8 = 1 << iota
+	CHEESE
+	BACON 
+	ZEEP 
 )
 
+// b = uint8 of 0
+// b = 0010
 
 type TimeBlock struct {
 	startDate time.Time
