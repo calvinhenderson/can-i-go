@@ -93,7 +93,20 @@ func (t TimeBlock) TimeTil(start bool) time.Duration{
 	}
 }
 
+// Return StartDate from TimeBlock
+func (t TimeBlock) GetStartDate() time.Time{
+	return t.startDate
+}
 
+// Return EndDate from TimeBlock
+func (t TimeBlock) GetEndDate() time.Time{
+	return t.endDate
+}
+
+// Return Flags from TimeBlock
+func (t TimeBlock) GetFlags() uint8{
+	return t.flags
+}
 /* Converts a string of time and date into a time.Time struct ->
 EX. s = 2:30 pm - d = 2024-02-25 becomes 2024-02-25 14:30:00 -0500 EST
 */
@@ -145,7 +158,7 @@ Uses time.Time for StartDate and EndTime args
 
 flags needs to hold at least one flag -> {OPEN, HD, LM, ED}
 */
-func NewTimeBlockNoStrings(StartDate time.Time, EndTime time.Time, flags []uint8) TimeBlock{
+func NewTimeBlockNoStrings(StartDate time.Time, EndDate time.Time, flags []uint8) TimeBlock{
 	
 	var f uint8
 	for _,flag := range flags {
@@ -154,7 +167,7 @@ func NewTimeBlockNoStrings(StartDate time.Time, EndTime time.Time, flags []uint8
 
 	tb := TimeBlock{
 		startDate: StartDate,
-		endDate: EndTime,
+		endDate: EndDate,
 		flags: f,
 	}
 	return tb
