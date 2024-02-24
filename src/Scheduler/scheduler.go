@@ -1,9 +1,11 @@
 package timekeeper
 
 import (
+	"encoding/csv"
 	"log"
+	"os"
+	"strings"
 	"time"
-	
 )
 
 
@@ -91,6 +93,7 @@ func (t TimeBlock) TimeTil(start bool) time.Duration{
 	}
 }
 
+
 /* Converts a string of time and date into a time.Time struct ->
 EX. s = 2:30 pm - d = 2024-02-25 becomes 2024-02-25 14:30:00 -0500 EST
 */
@@ -157,6 +160,49 @@ func NewTimeBlockNoStrings(StartDate time.Time, EndTime time.Time, flags []uint8
 	return tb
 }
 
+
+func NewTimeBlocksFromCSV(fpath string) []TimeBlock {
+	file, err := os.Open(fpath) 
+      
+    
+    if err != nil { 
+        log.Println(err) 
+    } 
+  
+    
+    defer file.Close() 
+  
+    reader := csv.NewReader(file) 
+      
+    records, err := reader.ReadAll() 
+
+    if err != nil { 
+		log.Println(err)
+    } 
+
+    var tb []TimeBlock
+
+    for _, eachrecord := range records[1:]  { 
+		var flags []uint8
+		fgs := strings.Split(eachrecord[3], ",")
+		for _,f := range fgs {
+			if strings.Contains(f,"OPEN") {
+				flags = append(flags, OPEN)
+			}
+			if strings.Contains(f,"LM") {
+				flags = append(flags, LM)
+			}
+			if strings.Contains(f,"HD") {
+				flags = append(flags, HD)
+			}
+			if strings.Contains(f,"ED") {
+				flags = append(flags, ED)
+			}
+		}
+		tb = append(tb, NewTimeBlock(eachrecord[0],eachrecord[1],eachrecord[2],flags))
+    } 
+	return tb
+}
 
 
 

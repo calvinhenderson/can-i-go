@@ -60,5 +60,12 @@ func TestTimeTil(t *testing.T){
 	tme := sch.NewTimeBlock("12:00 pm", "2:00 pm", "2024-02-24",[]uint8{sch.OPEN})
 	log.Println(tme.TimeTil(true))
 
-
 }
+
+func TestTimeBlockCSV(t *testing.T){
+	file := "../Scheduler/Schedule.csv"
+	for _,x := range sch.NewTimeBlocksFromCSV(file) {
+		log.Println(x)
+	}
+}
+
