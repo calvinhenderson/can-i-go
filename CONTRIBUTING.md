@@ -13,12 +13,3 @@ all of the relevant information.
 
 Any suggestions are welcome.
 
-
-## Code Overview
-
-Server-side code lives in the [src](src) directory.
-
-Front-end code lives in the [client](client) directory.
-
-Tests are located in the [tests](tests) folder. The structure should match that
-of the [src](src) directory.
