@@ -43,19 +43,23 @@ check: tidy audit no-dirty
 ## Testing
 
 .PHONY: test
-test:
+test: build
 	go test -v -race -buildvcs ./...
 
 .PHONY: test/cover
-test/cover:
+test/cover: build
 	go test -v -race -buildvcs ./...
 	go tool cover -html=/tmp/coverage.out
 
 
 ## Development
 
+.PHONY: deps
+deps:
+	go get ./...
+
 .PHONY: build
-build:
+build: deps
 	go build -o=/tmp/bin/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
 
 .PHONY: run
