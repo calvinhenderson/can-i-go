@@ -37,8 +37,12 @@ audit:
 	go run golang.org/x/vuln/cmd/govulncheck@latest ./...
 	go test -race -buildvcs -vet=off ./...
 
+.PHONY: lint
+lint:
+	go run github.com/golangci/golangci-lint/cmd/golangci-lint@v1.56.2 run
+
 .PHONY: check
-check: tidy audit no-dirty
+check: tidy lint audit no-dirty
 
 ## Testing
 
