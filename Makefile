@@ -56,7 +56,7 @@ test/cover:
 
 .PHONY: build
 build:
-    go build -o=/tmp/bin/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
+	go build -o=/tmp/bin/${BINARY_NAME} ${MAIN_PACKAGE_PATH}
 
 .PHONY: run
 run: build
