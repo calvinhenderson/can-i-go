@@ -14,6 +14,9 @@ information to end-users in real-time.
 
 ## Getting Started
 
+1. Clone the repository `git clone https://github.com/calvinhenderson/can-i-go`
+2. To run the project, execute `make run`
+3. To run the project with live reloading, execute `make run/live`
 
 ## Contributing
 
