@@ -2,6 +2,7 @@ package routes
 
 import (
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -11,6 +12,8 @@ func Ping() http.HandlerFunc {
 		w.Header().Set("cache-control", "no-cache")
 		w.WriteHeader(http.StatusOK)
 
-		io.WriteString(w, "OK\n")
+		if _, err := io.WriteString(w, "OK\n"); err != nil {
+			log.Printf("Error writing response body")
+		}
 	}
 }
